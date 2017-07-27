@@ -22,11 +22,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-cmake_minimum_required (VERSION 3.1)
-project (skia)
-set (CMAKE_CXX_STANDARD_REQUIRED 14)
+cmake_minimum_required(VERSION 3.5)
+project(3rdparty)
+set(CMAKE_CXX_STANDARD_REQUIRED 14)
 
-SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 # libexpat
 if(SKUI_USE_SYSTEM_LIBEXPAT)
@@ -41,7 +41,8 @@ if(NOT EXPAT_FOUND)
                     libexpat/xmlrole.c
                     libexpat/xmltok.c)
   add_library(expat STATIC ${expat_sources})
-  set_target_properties(expat PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libexpat)
+  set_target_properties(expat PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libexpat
+                                         FOLDER 3rdparty/expat)
   target_compile_definitions(expat PRIVATE XML_STATIC $<$<NOT:$<PLATFORM_ID:Windows>>:HAVE_MEMMOVE> $<$<PLATFORM_ID:Windows>:WIN32>)
 endif()
 
@@ -71,7 +72,8 @@ if(NOT ZLIB_FOUND)
                    zlib/zutil.c)
   file(GLOB zlib_headers zlib/*.h)
   add_library(zlib STATIC ${zlib_sources} ${zlib_headers})
-  set_target_properties(zlib PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/zlib)
+  set_target_properties(zlib PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/zlib
+                                        FOLDER 3rdparty/zlib)
 endif()
 
 # libpng
@@ -112,7 +114,8 @@ if(NOT PNG_FOUND)
   endif()
   file(GLOB libpng_headers libpng/*.h)
   add_library(png STATIC ${libpng_sources} ${libpng_headers})
-  set_target_properties(png PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libpng)
+  set_target_properties(png PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libpng
+                                       FOLDER 3rdparty/png)
   target_compile_definitions(png PRIVATE ${libpng_defines})
   target_link_libraries(png PUBLIC zlib)
 endif()
@@ -135,7 +138,8 @@ if(NOT GIF_FOUND)
                      giflib/quantize.c)
   file(GLOB giflib_headers giflib/*.h)
   add_library(gif STATIC ${giflib_sources} ${giflib_headers})
-  set_target_properties(gif PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/giflib)
+  set_target_properties(gif PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/giflib
+                                       FOLDER 3rdparty/gif)
 endif()
 
 # libjpeg-turbo
@@ -193,17 +197,20 @@ if(NOT LibJpegTurbo_FOUND)
                          )
   file(GLOB jpeg-turbo_headers libjpeg-turbo/*.h)
   add_library(jpeg-turbo STATIC ${jpeg-turbo_sources} ${jpeg-turbo_headers})
-  set_target_properties(jpeg-turbo PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libjpeg-turbo)
+  set_target_properties(jpeg-turbo PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libjpeg-turbo
+                                              FOLDER 3rdparty/jpeg-turbo)
 endif()
 
 # Skia
 set(SKIA_STATIC TRUE)
 add_subdirectory(skia)
+set_target_properties(skia PROPERTIES FOLDER 3rdparty)
 
 # OpenGL API headers for platforms that don't supply their own
 add_library(opengl-api INTERFACE)
 target_include_directories(opengl-api INTERFACE ${CMAKE_CURRENT_LIST_DIR}/opengl-api)
 
 # Miscellaneous files
-add_custom_target(skui_3rdparty_misc SOURCES
+add_custom_target(3rdparty_misc SOURCES
     README.md)
+set_target_properties(3rdparty_misc PROPERTIES FOLDER 3rdparty)
