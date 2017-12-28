@@ -44,6 +44,9 @@ if(NOT EXPAT_FOUND)
   set_target_properties(expat PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libexpat
                                          FOLDER 3rdparty/expat)
   target_compile_definitions(expat PRIVATE XML_STATIC $<$<NOT:$<PLATFORM_ID:Windows>>:HAVE_MEMMOVE> $<$<PLATFORM_ID:Windows>:WIN32>)
+  if(MSVC)
+    set_target_properties(expat PROPERTIES COMPILE_FLAGS "/wd4311")
+  endif()
 endif()
 
 # zlib
@@ -74,6 +77,11 @@ if(NOT ZLIB_FOUND)
   add_library(zlib STATIC ${zlib_sources} ${zlib_headers})
   set_target_properties(zlib PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/zlib
                                         FOLDER 3rdparty/zlib)
+  if(MSVC)
+    set_target_properties(zlib PROPERTIES COMPILE_FLAGS "/wd4996 /wd4267")
+  elseif(APPLE)
+    set_target_properties(zlib PROPERTIES COMPILE_FLAGS "-Wno-implicit-function-declaration")
+  endif()
 endif()
 
 # libpng
@@ -140,6 +148,9 @@ if(NOT GIF_FOUND)
   add_library(gif STATIC ${giflib_sources} ${giflib_headers})
   set_target_properties(gif PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/giflib
                                        FOLDER 3rdparty/gif)
+  if(MSVC)
+    set_target_properties(gif PROPERTIES COMPILE_FLAGS "/wd4996 /wd4018 /wd4267 /wd4028 /wd4244")
+  endif()
 endif()
 
 # libjpeg-turbo
