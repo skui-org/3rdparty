@@ -103,7 +103,6 @@ if(NOT PNG_FOUND)
                      libpng/pngrtran.c
                      libpng/pngrutil.c
                      libpng/pngset.c
-                     libpng/pngtest.c
                      libpng/pngtrans.c
                      libpng/pngwio.c
                      libpng/pngwrite.c
