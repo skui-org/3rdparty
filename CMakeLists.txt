@@ -220,6 +220,16 @@ set_target_properties(skia PROPERTIES FOLDER 3rdparty)
 add_library(opengl-api INTERFACE)
 target_include_directories(opengl-api INTERFACE ${CMAKE_CURRENT_LIST_DIR}/opengl-api)
 
+# Boost Spirit X3 and dependencies
+add_library(boost INTERFACE)
+if(SKUI_USE_SYSTEM_BOOST)
+  find_package(Boost 1.66 REQUIRED)
+  target_include_directories(boost SYSTEM INTERFACE ${Boost_INCLUDE_DIRS})
+else()
+  message(STATUS "Using bundled Boost headers")
+  target_include_directories(boost SYSTEM INTERFACE ${CMAKE_CURRENT_LIST_DIR}/boost)
+endif()
+
 # Miscellaneous files
 add_custom_target(3rdparty_misc SOURCES
     README.md)
