@@ -107,9 +107,9 @@ if(NOT PNG_FOUND)
                      libpng/pngwutil.c)
   file(GLOB png_headers libpng/*.h)
   if(ARM OR ARM64)
-  set(libpng_sources ${libpng_sources}
-                     arm_init.c
-                     filter_neon_intrinsics.c)
+    set(libpng_sources ${libpng_sources}
+                       arm_init.c
+                       filter_neon_intrinsics.c)
   elseif(X86)
     set(libpng_sources ${libpng_sources}
                        intel_init.c
