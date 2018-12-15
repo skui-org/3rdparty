@@ -227,6 +227,25 @@ else()
   target_include_directories(boost SYSTEM INTERFACE ${CMAKE_CURRENT_LIST_DIR}/boost)
 endif()
 
+# install rules
+install(TARGETS expat zlib png gif jpeg-turbo opengl-api skia boost
+        ARCHIVE DESTINATION "."
+        RUNTIME DESTINATION "."
+        LIBRARY DESTINATION ".")
+install(DIRECTORY "libexpat/" DESTINATION "libexpat"
+                             FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY "zlib/" DESTINATION "zlib"
+                         FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY "libpng/" DESTINATION "libpng"
+                           FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY "giflib/" DESTINATION "giflib"
+                           FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY "libjpeg-turbo/" DESTINATION "libjpeg-turbo"
+                                  FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY "opengl-api/" DESTINATION "opengl-api")
+install(DIRECTORY "skia/include/" DESTINATION "skia")
+install(DIRECTORY "boost/" DESTINATION "boost")
+
 # Miscellaneous files
 add_custom_target(3rdparty_misc SOURCES
     README.md)
