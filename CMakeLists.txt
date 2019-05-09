@@ -217,6 +217,9 @@ set_target_properties(skia PROPERTIES FOLDER 3rdparty)
 add_library(opengl-api INTERFACE)
 target_include_directories(opengl-api INTERFACE ${CMAKE_CURRENT_LIST_DIR}/opengl-api)
 
+add_library(vulkan-api INTERFACE)
+target_include_directories(vulkan-api INTERFACE ${CMAKE_CURRENT_LIST_DIR}/vulkan-api)
+
 # Boost Spirit X3 and dependencies
 add_library(boost INTERFACE)
 if(SKUI_USE_SYSTEM_BOOST)
@@ -243,6 +246,7 @@ install(DIRECTORY "giflib/" DESTINATION "giflib"
 install(DIRECTORY "libjpeg-turbo/" DESTINATION "libjpeg-turbo"
                                   FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY "opengl-api/" DESTINATION "opengl-api")
+install(DIRECTORY "vulkan-api/" DESTINATION "vulkan-api")
 install(DIRECTORY "skia/include/" DESTINATION "skia")
 install(DIRECTORY "boost/" DESTINATION "boost")
 
