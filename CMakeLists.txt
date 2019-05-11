@@ -184,6 +184,7 @@ if(NOT LibJpegTurbo_FOUND)
                          libjpeg-turbo/jdcolor.c
                          libjpeg-turbo/jddctmgr.c
                          libjpeg-turbo/jdhuff.c
+                         libjpeg-turbo/jdicc.c
                          libjpeg-turbo/jdinput.c
                          libjpeg-turbo/jdmainct.c
                          libjpeg-turbo/jdmarker.c
