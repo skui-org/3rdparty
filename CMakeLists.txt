@@ -44,8 +44,7 @@ if(NOT EXPAT_FOUND)
   target_include_directories(expat INTERFACE ${CMAKE_CURRENT_LIST_DIR}/libexpat)
   target_compile_definitions(expat PRIVATE XML_STATIC
                                            $<$<NOT:$<PLATFORM_ID:Windows>>:HAVE_MEMMOVE>
-                                           $<$<PLATFORM_ID:Linux>:HAVE_GETRANDOM>
-                                           $<$<PLATFORM_ID:Darwin>:HAVE_ARC4RANDOM_BUF>
+                                           $<$<NOT:$<PLATFORM_ID:Windows>>:XML_DEV_URANDOM>
                                            $<$<PLATFORM_ID:Windows>:WIN32>)
   target_compile_options(expat PRIVATE $<$<C_COMPILER_ID:MSVC>:/wd4311>
                                        $<$<PLATFORM_ID:MinGW>:-Wno-pointer-to-int-cast>)
