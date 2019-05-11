@@ -13,7 +13,7 @@ extern "C" {
 
 #define GIFLIB_MAJOR 5
 #define GIFLIB_MINOR 1
-#define GIFLIB_RELEASE 4
+#define GIFLIB_RELEASE 9
 
 #define GIF_ERROR   0
 #define GIF_OK      1
@@ -58,7 +58,7 @@ typedef struct ExtensionBlock {
 #define COMMENT_EXT_FUNC_CODE     0xfe    /* comment */
 #define GRAPHICS_EXT_FUNC_CODE    0xf9    /* graphics control (GIF89) */
 #define PLAINTEXT_EXT_FUNC_CODE   0x01    /* plaintext */
-#define APPLICATION_EXT_FUNC_CODE 0xff    /* application block */
+#define APPLICATION_EXT_FUNC_CODE 0xff    /* application block (GIF89) */
 } ExtensionBlock;
 
 typedef struct SavedImage {
@@ -200,10 +200,10 @@ GifFileType *DGifOpen(void *userPtr, InputFunc readFunc, int *Error);    /* new 
 /* These are legacy.  You probably do not want to call them directly */
 int DGifGetScreenDesc(GifFileType *GifFile);
 int DGifGetRecordType(GifFileType *GifFile, GifRecordType *GifType);
+int DGifGetImageHeader(GifFileType *GifFile);
 int DGifGetImageDesc(GifFileType *GifFile);
 int DGifGetLine(GifFileType *GifFile, GifPixelType *GifLine, int GifLineLen);
 int DGifGetPixel(GifFileType *GifFile, GifPixelType GifPixel);
-int DGifGetComment(GifFileType *GifFile, char *GifComment);
 int DGifGetExtension(GifFileType *GifFile, int *GifExtCode,
                      GifByteType **GifExtension);
 int DGifGetExtensionNext(GifFileType *GifFile, GifByteType **GifExtension);
@@ -211,6 +211,7 @@ int DGifGetCode(GifFileType *GifFile, int *GifCodeSize,
                 GifByteType **GifCodeBlock);
 int DGifGetCodeNext(GifFileType *GifFile, GifByteType **GifCodeBlock);
 int DGifGetLZCodes(GifFileType *GifFile, int *GifCode);
+const char *DGifGetGifVersion(GifFileType *GifFile);
 
 
 /******************************************************************************
@@ -243,9 +244,6 @@ extern ColorMapObject *GifUnionColorMap(const ColorMapObject *ColorIn1,
                                      const ColorMapObject *ColorIn2,
                                      GifPixelType ColorTransIn2[]);
 extern int GifBitSize(int n);
-
-extern void *
-reallocarray(void *optr, size_t nmemb, size_t size);
 
 /******************************************************************************
  Support for the in-core structures allocation (slurp mode).              
