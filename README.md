@@ -8,8 +8,8 @@ Any modifications to them are recorded in this repository's history.
 ## List of dependencies
 
 - zlib 1.2.11
-- libpng 1.6.29
-- giflib 1.5.4
-- libexpat 2.2.0
-- libjpeg-turbo 1.5.1
-- Skia m58
+- libpng 1.6.37
+- giflib 1.5.9
+- libexpat 2.2.6
+- libjpeg-turbo 2.0.2
+- Skia m75
