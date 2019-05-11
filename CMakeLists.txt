@@ -43,7 +43,10 @@ if(NOT EXPAT_FOUND)
   add_library(expat STATIC ${expat_sources})
   target_include_directories(expat INTERFACE ${CMAKE_CURRENT_LIST_DIR}/libexpat)
   target_compile_definitions(expat PRIVATE XML_STATIC
-                                           $<$<NOT:$<PLATFORM_ID:Windows>>:HAVE_MEMMOVE> $<$<PLATFORM_ID:Windows>:WIN32>)
+                                           $<$<NOT:$<PLATFORM_ID:Windows>>:HAVE_MEMMOVE>
+                                           $<$<PLATFORM_ID:Linux>:HAVE_GETRANDOM>
+                                           $<$<PLATFORM_ID:Darwin>:HAVE_ARC4RANDOM_BUF>
+                                           $<$<PLATFORM_ID:Windows>:WIN32>)
   target_compile_options(expat PRIVATE $<$<C_COMPILER_ID:MSVC>:/wd4311>
                                        $<$<PLATFORM_ID:MinGW>:-Wno-pointer-to-int-cast>)
   set_target_properties(expat PROPERTIES FOLDER 3rdparty/expat)
