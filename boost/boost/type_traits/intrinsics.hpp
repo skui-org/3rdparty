@@ -230,7 +230,7 @@
 #     define BOOST_HAS_TRIVIAL_MOVE_CONSTRUCTOR(T) (__is_trivially_constructible(T, T&&) && is_constructible<T, T&&>::value && !::boost::is_volatile<T>::value)
 #   endif
 #   if __has_extension(is_trivially_assignable)
-#     define BOOST_HAS_TRIVIAL_MOVE_ASSIGN(T) (__is_trivially_assignable(T&, T&&) && std::is_assignable<T&, T&&>::value && !::boost::is_volatile<T>::value)
+#     define BOOST_HAS_TRIVIAL_MOVE_ASSIGN(T) (__is_trivially_assignable(T&, T&&) && is_assignable<T&, T&&>::value && !::boost::is_volatile<T>::value)
 #   endif
 #endif
 #   if (!defined(unix) && !defined(__unix__)) || defined(__LP64__) || !defined(__GNUC__)
