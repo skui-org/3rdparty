@@ -1,3 +1,6 @@
 [submodule "skia"]
 	path = skia
 	url = https://github.com/skui-org/skia.git
+[submodule "ci"]
+	path = ci
+	url = https://github.com/skui-org/ci.git
