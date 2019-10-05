@@ -2,14 +2,34 @@ dist: xenial
 
 language: cpp
 
+# deploy filename
+before_script:
+ - REPOSITORY=`echo ${TRAVIS_REPO_SLUG} | cut -d/ -f2`
+ - export DEPLOY_FILE_NAME=${REPOSITORY}_${TRAVIS_OS_NAME}-${TRAVIS_OSX_IMAGE:-$TRAVIS_COMPILER}_${TRAVIS_BRANCH}
+
+# actual build script
 script:
  - mkdir build
  - cd build
  - export CXXFLAGS=${CI_CXX_FLAGS} LDFLAGS=${CI_LDFLAGS}
- - cmake .. -G ${GENERATOR} -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCMAKE_BUILD_TYPE=${CONFIGURATION}
+ - cmake .. -G ${GENERATOR} -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCMAKE_BUILD_TYPE=${CONFIGURATION} -DCPACK_PACKAGE_FILE_NAME=${DEPLOY_FILE_NAME}
  - ninja
  - if [ $TRAVIS_REPO_SLUG == "skui-org/skui" ]; then ctest --output-on-failure; fi
+ - if [ $TRAVIS_REPO_SLUG == "skui-org/3rdparty" ]; then cpack -G TXZ; fi
 
+# deploy information
+deploy:
+  provider: releases
+  api_key:
+    secure: "vCSwGt0y+X1vsmiRDFB4BwaGv/FaNhFvZfaG5Kp2/Y821SqaszFl4cC6rwKWl4EhOrisLVNYWCTPfpCuWpJe/xocjb+ooqlD+6cYzkxiZG7cON2rAXxmt8CQ/rD9/hwGtdGr7HsqNewvv9fJ5S2t7o0Z2OMo0KRVz67+6wqAhK4XDN23GWvM/M03I7Qv/ZpIEWIJaCn/JMfOy3AgXslc6nLAFhHW6KI4xD4ibWd4CLEDlA9x89H9QpzHDnDJ23x5urIHiuHW0NZMs8/kPgpuCmOl+G/cEwT5Bi2RyJ2xI6hirwbm0xTwKDAx8VHeWrDjusNF1Ye4r+nJA2ZP/997Tk+1+dzwcgngyEa5rrtADdCdOEN4DgVT77rAzn0f7AB5NDP1joRA+A9fEOu5iFzjhtx1aFtf0XdTSDr3A5/LTWOpO2Yk5z7RuWu0tqJoEpJvVqxTPsgYlOd8uAWdQ5wFmfEpwP/KnvCuY8CjRGLaOcEUSPMm85wfGU4ouDVmiryI+5KHkyjWbGvcm805IW5Kxi35/p7nUffTbTh5x3zx49V4+YPq+vOzrgs+6FmQ5tbLulYdJuYDWOLeldMw+1fqPVaKaGIO5MCyVfguYcoVY52b+C6mHjj7y2/oAmtYsjkZZfcnNGgXg8DOCPfFbKcQLgQjdXEX15o4kVzBU49psSk="
+  file: ${DEPLOY_FILE_NAME}.tar.xz
+  skip_cleanup: true
+  all_branches: true
+  on:
+    tags: true
+    repo: skui-org/3rdparty
+
+# Linux packages
 addons:
   apt:
     sources:
