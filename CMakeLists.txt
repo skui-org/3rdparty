@@ -42,12 +42,6 @@ add_custom_target(miscellaneous_3rdparty SOURCES
     .travis.yml)
 
 # libexpat
-if(SKUI_USE_SYSTEM_LIBEXPAT)
-  find_package(EXPAT REQUIRED)
-  add_library(expat INTERFACE)
-  target_include_directories(expat INTERFACE ${EXPAT_INCLUDE_DIRS})
-  target_link_libraries(expat INTERFACE ${EXPAT_LIBRARIES})
-endif()
 if(NOT EXPAT_FOUND)
   message(STATUS "Using bundled libexpat")
   set(expat_sources libexpat/xmlparse.c
@@ -65,12 +59,6 @@ if(NOT EXPAT_FOUND)
 endif()
 
 # zlib
-if(SKUI_USE_SYSTEM_ZLIB)
-  find_package(ZLIB REQUIRED)
-  add_library(zlib INTERFACE)
-  target_include_directories(zlib INTERFACE ${ZLIB_INCLUDE_DIRS})
-  target_link_libraries(zlib INTERFACE ${ZLIB_LIBRARIES})
-endif()
 if(NOT ZLIB_FOUND)
   message(STATUS "Using bundled zlib")
   set(zlib_sources zlib/adler32.c
@@ -97,12 +85,6 @@ if(NOT ZLIB_FOUND)
 endif()
 
 # libpng
-if(SKUI_USE_SYSTEM_LIBPNG)
-  find_package(PNG REQUIRED)
-  add_library(png INTERFACE)
-  target_include_directories(png INTERFACE "${PNG_INCLUDE_DIRS}")
-  target_link_libraries(png INTERFACE "${PNG_LIBRARIES}")
-endif()
 if(NOT PNG_FOUND)
   message(STATUS "Using bundled libpng")
   set(libpng_sources libpng/png.c
@@ -141,12 +123,6 @@ if(NOT PNG_FOUND)
 endif()
 
 # giflib
-if(SKUI_USE_SYSTEM_GIFLIB)
-  find_package(GIF REQUIRED)
-  add_library(gif INTERFACE)
-  target_include_directories(gif INTERFACE ${GIF_INCLUDE_DIR})
-  target_link_libraries(gif INTERFACE ${GIF_LIBRARIES})
-endif()
 if(NOT GIF_FOUND)
   message(STATUS "Using bundled giflib")
   set(giflib_sources giflib/dgif_lib.c
@@ -164,12 +140,6 @@ if(NOT GIF_FOUND)
 endif()
 
 # libjpeg-turbo
-if(SKUI_USE_SYSTEM_LIBJPEG_TURBO)
-  find_package(LibJpegTurbo REQUIRED)
-  add_library(jpeg-turbo INTERFACE)
-  target_include_directories(jpeg-turbo INTERFACE ${LibJpegTurbo_INCLUDE_DIRS})
-  target_link_libraries(jpeg-turbo INTERFACE ${LibJpegTurbo_LIBRARIES})
-endif()
 if(NOT LibJpegTurbo_FOUND)
   message(STATUS "Using bundled libjpeg-turbo")
   set(jpeg-turbo_sources libjpeg-turbo/jaricom.c
@@ -225,9 +195,11 @@ if(NOT LibJpegTurbo_FOUND)
 endif()
 
 # Skia
-set(SKIA_STATIC TRUE)
-add_subdirectory(skia)
-set_target_properties(skia PROPERTIES FOLDER 3rdparty)
+if(NOT SKIA_FOUND)
+  set(SKIA_STATIC TRUE)
+  add_subdirectory(skia)
+  set_target_properties(skia PROPERTIES FOLDER 3rdparty)
+endif()
 
 # OpenGL API headers for platforms that don't supply their own
 add_library(opengl-api INTERFACE)
@@ -237,12 +209,9 @@ add_library(vulkan-api INTERFACE)
 target_include_directories(vulkan-api INTERFACE ${CMAKE_CURRENT_LIST_DIR}/vulkan-api)
 
 # Boost Spirit X3 and dependencies
-add_library(boost INTERFACE)
-if(SKUI_USE_SYSTEM_BOOST)
-  find_package(Boost 1.66 REQUIRED)
-  target_include_directories(boost SYSTEM INTERFACE ${Boost_INCLUDE_DIRS})
-else()
+if(NOT Boost_FOUND)
   message(STATUS "Using bundled Boost headers")
+  add_library(boost INTERFACE)
   target_include_directories(boost SYSTEM INTERFACE ${CMAKE_CURRENT_LIST_DIR}/boost)
 endif()
 
@@ -263,7 +232,8 @@ install(DIRECTORY "libjpeg-turbo/" DESTINATION "libjpeg-turbo"
                                   FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY "opengl-api/" DESTINATION "opengl-api")
 install(DIRECTORY "vulkan-api/" DESTINATION "vulkan-api")
-install(DIRECTORY "skia/include/" DESTINATION "skia")
+install(DIRECTORY "skia/include" DESTINATION "skia")
+install(DIRECTORY "skia/third_party" DESTINATION "skia")
 install(DIRECTORY "boost/" DESTINATION "boost")
 
 # Miscellaneous files
