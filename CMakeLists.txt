@@ -43,7 +43,6 @@ add_custom_target(miscellaneous_3rdparty SOURCES
 
 # libexpat
 if(NOT EXPAT_FOUND)
-  message(STATUS "Using bundled libexpat")
   set(expat_sources libexpat/xmlparse.c
                     libexpat/xmlrole.c
                     libexpat/xmltok.c)
@@ -60,7 +59,6 @@ endif()
 
 # zlib
 if(NOT ZLIB_FOUND)
-  message(STATUS "Using bundled zlib")
   set(zlib_sources zlib/adler32.c
                    zlib/compress.c
                    zlib/crc32.c
@@ -86,7 +84,6 @@ endif()
 
 # libpng
 if(NOT PNG_FOUND)
-  message(STATUS "Using bundled libpng")
   set(libpng_sources libpng/png.c
                      libpng/pngerror.c
                      libpng/pngget.c
@@ -124,7 +121,6 @@ endif()
 
 # giflib
 if(NOT GIF_FOUND)
-  message(STATUS "Using bundled giflib")
   set(giflib_sources giflib/dgif_lib.c
                      giflib/egif_lib.c
                      giflib/gif_err.c
@@ -141,7 +137,6 @@ endif()
 
 # libjpeg-turbo
 if(NOT LibJpegTurbo_FOUND)
-  message(STATUS "Using bundled libjpeg-turbo")
   set(jpeg-turbo_sources libjpeg-turbo/jaricom.c
                          libjpeg-turbo/jcapimin.c
                          libjpeg-turbo/jcapistd.c
@@ -210,7 +205,6 @@ target_include_directories(vulkan-api INTERFACE ${CMAKE_CURRENT_LIST_DIR}/vulkan
 
 # Boost Spirit X3 and dependencies
 if(NOT Boost_FOUND)
-  message(STATUS "Using bundled Boost headers")
   add_library(boost INTERFACE)
   target_include_directories(boost SYSTEM INTERFACE ${CMAKE_CURRENT_LIST_DIR}/boost)
 endif()
