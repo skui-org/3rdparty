@@ -7,8 +7,7 @@ environment:
     VCVARSARG: amd64
     CMAKE_ARGS: -DCMAKE_SYSTEM_VERSION=10.0
     BUILD_ARGS: /verbosity:minimal
-
-    PACKAGE_ID: vs2017_x64
+    PACKAGE_ID: vs2017_x86_64
   - TOOLCHAIN: "Visual Studio 2019 x64"
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
     GENERATOR: Visual Studio 16 2019
@@ -111,7 +110,6 @@ environment:
 matrix:
   allow_failures:
     - TOOLCHAIN: "MinGW-w64 Clang"
-    - TOOLCHAIN: "MinGW-w64 GCC"
 
 configuration:
  - Release
@@ -133,24 +131,27 @@ install:
  - set PATH=C:\cmake\cmake-3.14.3-win64-x64\bin;%PATH%
 
  - cd %APPVEYOR_BUILD_FOLDER%
- - dir
  - git submodule -q update --init --recursive
 
 before_build:
- - set DEPLOY_FILE_NAME=3rdparty_Windows-%PACKAGE_ID%_%APPVEYOR_REPO_TAG_NAME%
+ - set DEPLOY_FILE_NAME=3rdparty_windows-%PACKAGE_ID%_%APPVEYOR_REPO_TAG_NAME%
 
 build_script:
  - mkdir build
  - cd build
  - cmake %CMAKE_ARGS% -G"%GENERATOR%" -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCPACK_PACKAGE_FILE_NAME=%DEPLOY_FILE_NAME% -DCPACK_GENERATOR=ZIP .. || (echo CMAKEERROR && type CMakeFiles\CMakeError.log && echo CMAKEOUTPUT && type CMakeFiles\CMakeOutput.log && exit 1)
- - cmake --build . --config %CONFIGURATION% -- %BUILD_ARGS%
  - cmake --build . --config %CONFIGURATION% --target package -- %BUILD_ARGS%
+
+artifacts:
+ - path: build/$(DEPLOY_FILE_NAME).zip
+   name: package
 
 deploy:
  - provider: GitHub
    release: $(APPVEYOR_REPO_TAG_NAME)
    tag: $(APPVEYOR_REPO_TAG_NAME)
-   artifact: ${DEPLOY_FILE_NAME}.zip
+   force_update: true
+   artifact: package
    auth_token:
      secure: MLSAQ6y/jIxgGwKzO1/LIoG7hueJzhunmBHCIb3c/MbvP64eeY6py4Xqk39k8Gwc
    on:
