@@ -38,6 +38,7 @@ endif()
 
 # Miscellaneous files
 add_custom_target(miscellaneous_3rdparty SOURCES
+    appveyor.yml
     README.md
     .travis.yml)
 
