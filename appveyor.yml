@@ -131,11 +131,11 @@ before_build:
 build_script:
  - mkdir build
  - cd build
- - cmake %CMAKE_ARGS% -G"%GENERATOR%" -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCPACK_PACKAGE_FILE_NAME=%DEPLOY_FILE_NAME% -DCPACK_GENERATOR=ZIP .. || (echo CMAKEERROR && type CMakeFiles\CMakeError.log && echo CMAKEOUTPUT && type CMakeFiles\CMakeOutput.log && exit 1)
+ - cmake %CMAKE_ARGS% -G"%GENERATOR%" -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCPACK_PACKAGE_FILE_NAME=%DEPLOY_FILE_NAME% -DCPACK_GENERATOR=7Z .. || (echo CMAKEERROR && type CMakeFiles\CMakeError.log && echo CMAKEOUTPUT && type CMakeFiles\CMakeOutput.log && exit 1)
  - cmake --build . --config %CONFIGURATION% --target package -- %BUILD_ARGS%
 
 artifacts:
- - path: build/$(DEPLOY_FILE_NAME).zip
+ - path: build/$(DEPLOY_FILE_NAME).7z
    name: package
 
 deploy:
