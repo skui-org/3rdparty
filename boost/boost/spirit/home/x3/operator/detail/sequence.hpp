@@ -88,9 +88,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typename fusion::result_of::begin<Attribute>::type
         >::type type;
 
-        static type call(Attribute& attr)
+        static type call(Attribute& attribute)
         {
-            return fusion::deref(fusion::begin(attr));
+            return fusion::deref(fusion::begin(attribute));
         }
     };
 
@@ -101,9 +101,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename Attribute_>
         static Attribute_&
-        call(Attribute_& attr)
+        call(Attribute_& attribute)
         {
-            return attr;
+            return attribute;
         }
     };
 
@@ -333,9 +333,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     parse_sequence_container(
         Parser const& parser
       , Iterator& first, Iterator const& last, Context const& context
-      , RContext& rcontext, Attribute& attr)
+      , RContext& rcontext, Attribute& attribute)
     {
-        return parser.parse(first, last, context, rcontext, attr);
+        return parser.parse(first, last, context, rcontext, attribute);
     }
 
     template <typename Parser, typename Iterator, typename Context
@@ -344,21 +344,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     parse_sequence_container(
         Parser const& parser
       , Iterator& first, Iterator const& last, Context const& context
-      , RContext& rcontext, Attribute& attr)
+      , RContext& rcontext, Attribute& attribute)
     {
-        return parse_into_container(parser, first, last, context, rcontext, attr);
+        return parse_into_container(parser, first, last, context, rcontext, attribute);
     }
 
     template <typename Parser, typename Iterator, typename Context
       , typename RContext, typename Attribute>
     bool parse_sequence(
         Parser const& parser , Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr
+      , Context const& context, RContext& rcontext, Attribute& attribute
       , traits::container_attribute)
     {
         Iterator save = first;
-        if (parse_sequence_container(parser.left, first, last, context, rcontext, attr)
-            && parse_sequence_container(parser.right, first, last, context, rcontext, attr))
+        if (parse_sequence_container(parser.left, first, last, context, rcontext, attribute)
+            && parse_sequence_container(parser.right, first, last, context, rcontext, attribute))
             return true;
         first = save;
         return false;
@@ -368,20 +368,20 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , typename RContext, typename Attribute>
     bool parse_sequence_assoc(
         Parser const& parser , Iterator& first, Iterator const& last
-	  , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_ /*should_split*/)
+    , Context const& context, RContext& rcontext, Attribute& attribute, mpl::false_ /*should_split*/)
     {
-	    return parse_into_container(parser, first, last, context, rcontext, attr);
+      return parse_into_container(parser, first, last, context, rcontext, attribute);
     }
 
     template <typename Parser, typename Iterator, typename Context
       , typename RContext, typename Attribute>
     bool parse_sequence_assoc(
         Parser const& parser , Iterator& first, Iterator const& last
-	  , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_ /*should_split*/)
+    , Context const& context, RContext& rcontext, Attribute& attribute, mpl::true_ /*should_split*/)
     {
         Iterator save = first;
-        if (parser.left.parse( first, last, context, rcontext, attr)
-            && parser.right.parse(first, last, context, rcontext, attr))
+        if (parser.left.parse( first, last, context, rcontext, attribute)
+            && parser.right.parse(first, last, context, rcontext, attribute))
             return true;
         first = save;
         return false;
@@ -391,7 +391,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , typename RContext, typename Attribute>
     bool parse_sequence(
         Parser const& parser, Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr
+      , Context const& context, RContext& rcontext, Attribute& attribute
       , traits::associative_attribute)
     {
         // we can come here in 2 cases:
@@ -418,7 +418,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
               , is_same<r_attr_type, unused_type> >
         should_split;
 
-        return parse_sequence_assoc(parser, first, last, context, rcontext, attr
+        return parse_sequence_assoc(parser, first, last, context, rcontext, attribute
           , should_split());
     }
 
@@ -431,7 +431,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
+          , Context const& context, RContext& rcontext, Attribute& attribute, mpl::false_)
         {
             // inform user what went wrong if we jumped here in attempt to
             // parse incompatible sequence into fusion::map
@@ -447,8 +447,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 return false;
             }
-            traits::append(attr, std::make_move_iterator(traits::begin(attr_)),
-                                 std::make_move_iterator(traits::end(attr_)));
+            traits::append(attribute, std::make_move_iterator(traits::begin(attr_)),
+                                      std::make_move_iterator(traits::end(attr_)));
             return true;
         }
 
@@ -456,17 +456,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
+          , Context const& context, RContext& rcontext, Attribute& attribute, mpl::true_)
         {
             return parse_into_container_base_impl<parser_type>::call(
-                parser, first, last, context, rcontext, attr);
+                parser, first, last, context, rcontext, attribute);
         }
 
         template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr)
+          , Context const& context, RContext& rcontext, Attribute& attribute)
         {
             typedef typename
                 traits::attribute_of<parser_type, Context>::type
@@ -476,7 +476,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 traits::container_value<Attribute>::type
             value_type;
 
-            return call(parser, first, last, context, rcontext, attr
+            return call(parser, first, last, context, rcontext, attribute
 	        , typename traits::is_substitute<attribute_type, value_type>::type());
         }
     };

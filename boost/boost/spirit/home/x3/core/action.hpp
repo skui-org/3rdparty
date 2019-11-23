@@ -37,23 +37,23 @@ namespace boost { namespace spirit { namespace x3
         template <typename Iterator, typename Context, typename RuleContext, typename Attribute>
         bool call_action(
             Iterator& first, Iterator const& last
-          , Context const& context, RuleContext& rcontext, Attribute& attr) const
+          , Context const& context, RuleContext& rcontext, Attribute& attribute) const
         {
             bool pass = true;
             auto action_context = make_context<parse_pass_context_tag>(pass, context);
-            call(f, first, last, action_context, rcontext, attr);
+            call(f, first, last, action_context, rcontext, attribute);
             return pass;
         }
 
         template <typename Iterator, typename Context
           , typename RuleContext, typename Attribute>
         bool parse_main(Iterator& first, Iterator const& last
-          , Context const& context, RuleContext& rcontext, Attribute& attr) const
+          , Context const& context, RuleContext& rcontext, Attribute& attribute) const
         {
             Iterator save = first;
-            if (this->subject.parse(first, last, context, rcontext, attr))
+            if (this->subject.parse(first, last, context, rcontext, attribute))
             {
-                if (call_action(first, last, context, rcontext, attr))
+                if (call_action(first, last, context, rcontext, attribute))
                     return true;
 
                 // reset iterators if semantic action failed the match
@@ -83,17 +83,17 @@ namespace boost { namespace spirit { namespace x3
             attribute_type;
 
             // synthesize the attribute since one is not supplied
-            attribute_type attr{};
-            return parse_main(first, last, context, rcontext, attr);
+            attribute_type attribute{};
+            return parse_main(first, last, context, rcontext, attribute);
         }
         
         // main parse function
         template <typename Iterator, typename Context
             , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, RuleContext& rcontext, Attribute& attr) const
+          , Context const& context, RuleContext& rcontext, Attribute& attribute) const
         {
-            return parse_main(first, last, context, rcontext, attr);
+            return parse_main(first, last, context, rcontext, attribute);
         }
 
         Action f;
