@@ -61,7 +61,7 @@ jobs:
         - CXX_COMPILER=g++-7
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Linux
+        - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
     - os: linux
       compiler: gcc-8
@@ -71,7 +71,7 @@ jobs:
         - CXX_COMPILER=g++-8
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Linux
+        - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
     - os: linux
       compiler: gcc-9
@@ -81,7 +81,7 @@ jobs:
         - CXX_COMPILER=g++-9
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Linux
+        - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
     - os: linux
       compiler: gcc-8
@@ -94,7 +94,7 @@ jobs:
         - CI_CXX_FLAGS=--coverage
         - CI_LDFLAGS=--coverage
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Linux
+        - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
         - . ./ci/setup_lcov.sh 1.14
       after_success:
@@ -110,7 +110,7 @@ jobs:
         - CXX_COMPILER=clang++-5.0
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Linux
+        - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
         - . ./ci/setup_libcxx.sh 5.0.2 /usr
     - os: linux
@@ -121,7 +121,7 @@ jobs:
         - CXX_COMPILER=clang++-6.0
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Linux
+        - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
         - . ./ci/setup_libcxx.sh 6.0.1 /usr
     - os: linux
@@ -132,7 +132,7 @@ jobs:
         - CXX_COMPILER=clang++-7
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Linux
+        - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
         - . ./ci/setup_libcxx.sh 7.0.1 /usr
     - os: linux
@@ -143,7 +143,7 @@ jobs:
         - CXX_COMPILER=clang++-8
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Linux
+        - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
         - . ./ci/setup_libcxx.sh 8.0.0 /usr
     - os: osx
@@ -156,7 +156,7 @@ jobs:
         - CI_LDFLAGS='-L /Users/travis/libc++/lib'
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Darwin
+        - . ./ci/setup_cmake.sh 3.16.4 Darwin
         - . ./ci/setup_ninja.sh 1.8.2 mac
         - . ./ci/setup_libcxx.sh 8.0.1 /Users/travis/libc++
     - os: osx
@@ -169,7 +169,7 @@ jobs:
         - CI_LDFLAGS='-L /Users/travis/libc++/lib'
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Darwin
+        - . ./ci/setup_cmake.sh 3.16.4 Darwin
         - . ./ci/setup_ninja.sh 1.8.2 mac
         - . ./ci/setup_libcxx.sh 8.0.1 /Users/travis/libc++
     - os: osx
@@ -182,7 +182,7 @@ jobs:
         - CI_LDFLAGS='-L /Users/travis/libc++/lib'
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Darwin
+        - . ./ci/setup_cmake.sh 3.16.4 Darwin
         - . ./ci/setup_ninja.sh 1.8.2 mac
         - . ./ci/setup_libcxx.sh 8.0.1 /Users/travis/libc++
     - os: osx
@@ -195,7 +195,7 @@ jobs:
         - CI_LDFLAGS='-L /Users/travis/libc++/lib'
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Darwin
+        - . ./ci/setup_cmake.sh 3.16.4 Darwin
         - . ./ci/setup_ninja.sh 1.8.2 mac
         - . ./ci/setup_libcxx.sh 8.0.1 /Users/travis/libc++
     - os: osx
@@ -208,7 +208,7 @@ jobs:
         - CI_LDFLAGS='-L /Users/travis/libc++/lib'
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Darwin
+        - . ./ci/setup_cmake.sh 3.16.4 Darwin
         - . ./ci/setup_ninja.sh 1.8.2 mac
         - . ./ci/setup_libcxx.sh 8.0.1 /Users/travis/libc++
     - os: osx
@@ -221,7 +221,7 @@ jobs:
         - CI_LDFLAGS='-L /Users/travis/libc++/lib'
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Darwin
+        - . ./ci/setup_cmake.sh 3.16.4 Darwin
         - . ./ci/setup_ninja.sh 1.8.2 mac
         - . ./ci/setup_libcxx.sh 8.0.1 /Users/travis/libc++
     - os: osx
@@ -234,6 +234,6 @@ jobs:
         - CI_LDFLAGS='-L /Users/travis/libc++/lib'
         - CONFIGURATION=Release
       before_install:
-        - . ./ci/setup_cmake.sh 3.13.2 Darwin
+        - . ./ci/setup_cmake.sh 3.16.4 Darwin
         - . ./ci/setup_ninja.sh 1.8.2 mac
         - . ./ci/setup_libcxx.sh 8.0.1 /Users/travis/libc++
