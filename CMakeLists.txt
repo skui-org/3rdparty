@@ -233,5 +233,7 @@ install(DIRECTORY "boost/" DESTINATION "boost")
 
 # Miscellaneous files
 add_custom_target(3rdparty_misc SOURCES
-    README.md)
+    README.md
+    appveyor.yml
+    .travis.yml)
 set_target_properties(3rdparty_misc PROPERTIES FOLDER 3rdparty)
