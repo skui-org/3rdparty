@@ -29,28 +29,6 @@ deploy:
     tags: true
     repo: skui-org/3rdparty
 
-# Linux packages
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - llvm-toolchain-xenial-6.0
-      - llvm-toolchain-xenial-7
-      - llvm-toolchain-xenial-8
-    packages:
-      - g++-7
-      - g++-8
-      - g++-9
-      - clang-5.0
-      - clang-6.0
-      - clang-7
-      - clang-8
-      - libgl1-mesa-dev
-      - libegl1-mesa-dev
-      - libgles2-mesa-dev
-      - libxcb-util0-dev
-      - libxcb-image0-dev
-
 jobs:
   include:
     - os: linux
@@ -60,6 +38,17 @@ jobs:
         - C_COMPILER=gcc-7
         - CXX_COMPILER=g++-7
         - CONFIGURATION=Release
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - libgl1-mesa-dev
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libxcb-util0-dev
+            - libxcb-image0-dev
       before_install:
         - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
@@ -70,6 +59,17 @@ jobs:
         - C_COMPILER=gcc-8
         - CXX_COMPILER=g++-8
         - CONFIGURATION=Release
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - libgl1-mesa-dev
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libxcb-util0-dev
+            - libxcb-image0-dev
       before_install:
         - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
@@ -80,6 +80,17 @@ jobs:
         - C_COMPILER=gcc-9
         - CXX_COMPILER=g++-9
         - CONFIGURATION=Release
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9
+            - libgl1-mesa-dev
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libxcb-util0-dev
+            - libxcb-image0-dev
       before_install:
         - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
@@ -93,6 +104,17 @@ jobs:
         - CONFIGURATION=Debug
         - CI_CXX_FLAGS=--coverage
         - CI_LDFLAGS=--coverage
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - libgl1-mesa-dev
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libxcb-util0-dev
+            - libxcb-image0-dev
       before_install:
         - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
@@ -109,6 +131,18 @@ jobs:
         - C_COMPILER=clang-5.0
         - CXX_COMPILER=clang++-5.0
         - CONFIGURATION=Release
+      addons:
+        apt:
+          packages:
+            - clang-5.0
+            - libgl1-mesa-dev
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libxcb-util0-dev
+            - libxcb-image0-dev
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-5.0
       before_install:
         - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
@@ -120,6 +154,18 @@ jobs:
         - C_COMPILER=clang-6.0
         - CXX_COMPILER=clang++-6.0
         - CONFIGURATION=Release
+      addons:
+        apt:
+          packages:
+            - clang-6.0
+            - libgl1-mesa-dev
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libxcb-util0-dev
+            - libxcb-image0-dev
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-6.0
       before_install:
         - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
@@ -131,10 +177,22 @@ jobs:
         - C_COMPILER=clang-7
         - CXX_COMPILER=clang++-7
         - CONFIGURATION=Release
+      addons:
+        apt:
+          packages:
+            - clang-7
+            - libgl1-mesa-dev
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libxcb-util0-dev
+            - libxcb-image0-dev
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-7
       before_install:
         - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
-        - . ./ci/setup_libcxx.sh 7.0.1 /usr
+        - . ./ci/setup_libcxx.sh 7.1.0 /usr
     - os: linux
       compiler: clang-8
       env:
@@ -142,10 +200,22 @@ jobs:
         - C_COMPILER=clang-8
         - CXX_COMPILER=clang++-8
         - CONFIGURATION=Release
+      addons:
+        apt:
+          packages:
+            - clang-8
+            - libgl1-mesa-dev
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libxcb-util0-dev
+            - libxcb-image0-dev
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-8
       before_install:
         - . ./ci/setup_cmake.sh 3.16.4 Linux
         - . ./ci/setup_ninja.sh 1.8.2 linux
-        - . ./ci/setup_libcxx.sh 8.0.0 /usr
+        - . ./ci/setup_libcxx.sh 8.0.1 /usr
     - os: osx
       osx_image: xcode9.4
       env:
